@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import pokeApiLogo from './assets/pokeapi_256.3fa72200.png';
 import Search from './components/Search/Search';
 import ResultList from './components/ResultList/ResultList';
 import './App.css';
 
+const API_URL = "https://pokeapi.co/api/v2/pokemon/";
 interface State {
   results: { name: string; description: string }[];
   loading: boolean;
@@ -60,7 +61,7 @@ class App extends Component<Record<string, never>, State> {
 
     this.setState({ loading: true, results: [], errorMessage: null });
     try {
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${term}`);
+      const response = await fetch(API_URL + `${term}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }

@@ -12,8 +12,13 @@ interface State {
 class Search extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    const savedTerm = localStorage.getItem('searchTerm') || '';
-    this.state = { searchTerm: savedTerm.trim() };
+    // const savedTerm = localStorage.getItem('searchTerm') || '';
+    // this.state = { searchTerm: savedTerm.trim() };
+    this.state = { searchTerm: '' };
+  }
+
+  componentDidMount() {
+    localStorage.removeItem('searchTerm');
   }
 
   handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
