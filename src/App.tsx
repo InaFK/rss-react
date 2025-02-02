@@ -4,7 +4,7 @@ import Search from './components/Search/Search';
 import ResultList from './components/ResultList/ResultList';
 import './App.css';
 
-const API_URL = "https://pokeapi.co/api/v2/pokemon/";
+const API_URL = 'https://pokeapi.co/api/v2/pokemon/';
 interface State {
   results: { name: string; description: string }[];
   loading: boolean;

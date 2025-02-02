@@ -16,9 +16,11 @@ class Search extends Component<Props, State> {
   }
 
   componentDidMount() {
-    const [navigationEntry] = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
-    const isReload = navigationEntry?.type === "reload";
-    
+    const [navigationEntry] = performance.getEntriesByType(
+      'navigation'
+    ) as PerformanceNavigationTiming[];
+    const isReload = navigationEntry?.type === 'reload';
+
     if (!isReload) {
       const savedTerm = localStorage.getItem('searchTerm') || '';
       this.setState({ searchTerm: savedTerm });
@@ -35,7 +37,7 @@ class Search extends Component<Props, State> {
   handleSearch = () => {
     const { searchTerm } = this.state;
     const trimmedTerm = searchTerm.trim();
-    
+
     if (trimmedTerm.length >= 3 || trimmedTerm.length === 0) {
       localStorage.setItem('searchTerm', trimmedTerm);
       this.props.onSearch(trimmedTerm);
