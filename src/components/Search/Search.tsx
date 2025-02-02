@@ -12,30 +12,32 @@ interface State {
 class Search extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    // const savedTerm = localStorage.getItem('searchTerm') || '';
-    // this.state = { searchTerm: savedTerm.trim() };
     this.state = { searchTerm: '' };
   }
 
   componentDidMount() {
-    localStorage.removeItem('searchTerm');
+    const [navigationEntry] = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
+    const isReload = navigationEntry?.type === "reload";
+    
+    if (!isReload) {
+      const savedTerm = localStorage.getItem('searchTerm') || '';
+      this.setState({ searchTerm: savedTerm });
+      if (savedTerm.trim()) {
+        this.props.onSearch(savedTerm.trim());
+      }
+    }
   }
 
   handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const searchTerm = event.target.value;
-    this.setState({ searchTerm }, () => {
-      localStorage.setItem('searchTerm', searchTerm.trim());
-      if (searchTerm.trim().length >= 3 || searchTerm.trim().length === 0) {
-        this.props.onSearch(searchTerm.trim());
-      }
-    });
+    this.setState({ searchTerm: event.target.value });
   };
 
   handleSearch = () => {
     const { searchTerm } = this.state;
     const trimmedTerm = searchTerm.trim();
-    localStorage.setItem('searchTerm', trimmedTerm);
+    
     if (trimmedTerm.length >= 3 || trimmedTerm.length === 0) {
+      localStorage.setItem('searchTerm', trimmedTerm);
       this.props.onSearch(trimmedTerm);
     }
   };
