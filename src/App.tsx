@@ -27,7 +27,7 @@ class App extends Component<Record<string, never>, State> {
     this.fetchInitialResults();
   }
 
-  componentDidUpdate(prevProps: Record<string, never>, prevState: State) {
+  componentDidUpdate(_prevProps: Record<string, never>, prevState: State) {
     if (this.state.throwError && !prevState.throwError) {
       throw new Error('ErrorBoundary Test error');
     }
