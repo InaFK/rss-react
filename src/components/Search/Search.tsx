@@ -3,13 +3,13 @@ import './Search.css';
 
 interface Props {
   onSearch: (term: string) => void;
+  onError: (message: string) => void;
 }
 
 interface State {
   searchTerm: string;
 }
-const test =  123   // Missing semicolon, extra spaces
-console.log(test)
+
 class Search extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -17,17 +17,10 @@ class Search extends Component<Props, State> {
   }
 
   componentDidMount() {
-    const [navigationEntry] = performance.getEntriesByType(
-      'navigation'
-    ) as PerformanceNavigationTiming[];
-    const isReload = navigationEntry?.type === 'reload';
-
-    if (!isReload) {
-      const savedTerm = localStorage.getItem('searchTerm') || '';
-      this.setState({ searchTerm: savedTerm });
-      if (savedTerm.trim()) {
-        this.props.onSearch(savedTerm.trim());
-      }
+    const savedTerm = localStorage.getItem('searchTerm') || '';
+    this.setState({ searchTerm: savedTerm });
+    if (savedTerm.trim()) {
+      this.props.onSearch(savedTerm.trim());
     }
   }
 
@@ -39,9 +32,12 @@ class Search extends Component<Props, State> {
     const { searchTerm } = this.state;
     const trimmedTerm = searchTerm.trim();
 
-    if (trimmedTerm.length >= 3 || trimmedTerm.length === 0) {
+    if (trimmedTerm.length >= 5 || trimmedTerm.length === 0) {
       localStorage.setItem('searchTerm', trimmedTerm);
       this.props.onSearch(trimmedTerm);
+    }
+    else {
+      this.props.onError('API search result can only be fetched by entering a whole Pokémon name.');
     }
   };
 

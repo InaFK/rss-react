@@ -10,6 +10,7 @@ interface State {
   loading: boolean;
   throwError: boolean;
   errorMessage: string | null;
+  searchTerm: string;
 }
 
 class App extends Component<Record<string, never>, State> {
@@ -20,11 +21,18 @@ class App extends Component<Record<string, never>, State> {
       loading: false,
       throwError: false,
       errorMessage: null,
+      searchTerm: '',
     };
   }
 
   componentDidMount() {
-    this.fetchInitialResults();
+    const savedTerm = localStorage.getItem('searchTerm') || '';
+    if (savedTerm.trim()) {
+      this.setState({ searchTerm: savedTerm });
+      this.fetchResults(savedTerm);
+    } else {
+      this.fetchInitialResults();
+    }
   }
 
   componentDidUpdate(_prevProps: Record<string, never>, prevState: State) {
@@ -61,6 +69,14 @@ class App extends Component<Record<string, never>, State> {
 
     this.setState({ loading: true, results: [], errorMessage: null });
     try {
+      if (term.length < 3) {
+        this.setState({
+          loading: false,
+          errorMessage: 'API search result can be only by entering whole Pokémon name. Please...',
+        });
+        return;
+      }
+
       const response = await fetch(API_URL + `${term}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -69,7 +85,9 @@ class App extends Component<Record<string, never>, State> {
       this.setState({
         results: [{ name: data.name, description: data.species.url }],
         loading: false,
+        searchTerm: term,
       });
+      localStorage.setItem('searchTerm', term);
     } catch (error) {
       console.error('Error fetching results:', error);
       this.setState({
@@ -81,6 +99,10 @@ class App extends Component<Record<string, never>, State> {
 
   handleSearch = (term: string) => {
     this.fetchResults(term);
+  };
+
+  handleError = (message: string) => {
+    this.setState({ errorMessage: message });
   };
 
   triggerError = () => {
@@ -108,12 +130,12 @@ class App extends Component<Record<string, never>, State> {
           </div>
         </header>
         <section>
-          <Search onSearch={this.handleSearch} />
+          <Search onSearch={this.handleSearch} onError={this.handleError} />
         </section>
         <section>
           {loading && <p>Loading...</p>}
           {errorMessage && <p>{errorMessage}</p>}
-          {!loading && !errorMessage && <ResultList results={results} />}
+          {!loading && !errorMessage && <ResultList results={results} errorMessage={errorMessage} />}
         </section>
       </main>
     );
