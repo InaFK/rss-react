@@ -8,7 +8,8 @@ interface Props {
 interface State {
   searchTerm: string;
 }
-
+const test =  123   // Missing semicolon, extra spaces
+console.log(test)
 class Search extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
