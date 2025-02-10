@@ -6,17 +6,18 @@ interface Props {
   errorMessage: string | null;
 }
 
-const ResultList: React.FC<Props> = ({ results, errorMessage }) => {
+const ResultList: React.FC<Props> = ({ results }) => {
   return (
     <div className="result-container">
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
       {results.length > 0 ? (
-        results.map((result, index) => (
-          <div key={index}>
-            <h2>{result.name}</h2>
-            <p>{result.description}</p>
-          </div>
-        ))
+        <ul className="result-list">
+          {results.map((result) => (
+            <li key={result.name} className="result-item">
+              <h2>{result.name}</h2>
+              <p>{result.description}</p>
+            </li>
+          ))}
+        </ul>
       ) : (
         <p>No results found. Please try searching for a full Pokémon name.</p>
       )}

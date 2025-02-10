@@ -1,30 +1,56 @@
 import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useParams } from 'react-router-dom';
 import pokeApiLogo from './assets/pokeapi_256.3fa72200.png';
 import Search from './components/Search/Search';
 import ResultList from './components/ResultList/ResultList';
 import useSearchQuery from './hooks/useSearchQuery';
+import Pagination from './components/Pagination/Pagination';
 import './App.css';
 
 const API_URL = 'https://pokeapi.co/api/v2/pokemon/';
 
 const App = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/search/:page" element={<SearchResults />} />
+      </Routes>
+    </Router>
+  );
+};
+
+const Home = () => {
+  return (
+    <div>
+      <h1><a href='/search/:page'>Welcome to the Poke API Search!</a></h1>
+    </div>
+  );
+};
+
+const SearchResults = () => {
+  const { page } = useParams();
+  const navigate = useNavigate();
+  
   const [results, setResults] = useState<{ name: string; description: string }[]>([]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useSearchQuery();
+  const itemsPerPage = 10;
 
   useEffect(() => {
     if (searchTerm.trim()) {
-      fetchResults(searchTerm);
+      fetchResults(searchTerm, page);
     } else {
-      fetchInitialResults();
+      fetchInitialResults(page);
     }
-  }, [searchTerm]);
+  }, [searchTerm, page]);
 
-  const fetchInitialResults = async () => {
+  const fetchInitialResults = async (page: string | undefined) => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}?limit=10&offset=0`);
+      const offset = page ? (parseInt(page) - 1) * itemsPerPage : 0;
+      const response = await fetch(`${API_URL}?limit=${itemsPerPage}&offset=${offset}`);
       const data = await response.json();
       setResults(data.results.map((item: { name: string; url: string }) => ({
         name: item.name,
@@ -36,9 +62,9 @@ const App = () => {
     setLoading(false);
   };
 
-  const fetchResults = async (term: string) => {
+  const fetchResults = async (term: string, page: string | undefined) => {
     if (term.trim() === '') {
-      fetchInitialResults();
+      fetchInitialResults(page);
       return;
     }
 
@@ -63,6 +89,10 @@ const App = () => {
     setLoading(false);
   };
 
+  const handlePageChange = (newPage: number) => {
+    navigate(`/search/${newPage}`);
+  };
+
   return (
     <main>
       <header>
@@ -80,6 +110,7 @@ const App = () => {
         {loading && <p>Loading...</p>}
         {errorMessage && <p>{errorMessage}</p>}
         {!loading && !errorMessage && <ResultList results={results} errorMessage={errorMessage} />}
+        <Pagination currentPage={parseInt(page) || 1} onPageChange={handlePageChange} />
       </section>
     </main>
   );
