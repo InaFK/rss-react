@@ -6,14 +6,23 @@ const useSearchQuery = () => {
   });
 
   useEffect(() => {
-    if (searchTerm.trim() === '') {
+    const trimmedTerm = searchTerm.trim();
+
+    if (!trimmedTerm) {
       localStorage.removeItem('searchTerm');
     } else {
-      localStorage.setItem('searchTerm', searchTerm);
+      const storedTerm = localStorage.getItem('searchTerm');
+      if (storedTerm !== trimmedTerm) {
+        localStorage.setItem('searchTerm', trimmedTerm);
+      }
     }
   }, [searchTerm]);
 
-  return [searchTerm, setSearchTerm] as const;
+  const updateSearchTerm = (term: string) => {
+    setSearchTerm(term.trim());
+  };
+
+  return [searchTerm, updateSearchTerm] as const;
 };
 
 export default useSearchQuery;

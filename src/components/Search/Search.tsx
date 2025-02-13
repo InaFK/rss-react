@@ -29,6 +29,7 @@ const Search: React.FC<Props> = ({ onSearch, onError }) => {
       <input
         type="search"
         name="search"
+        placeholder="Search"
         value={searchTerm}
         onChange={handleInputChange}
       />
