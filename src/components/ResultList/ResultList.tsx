@@ -4,12 +4,19 @@ import './ResultList.css';
 interface Props {
   results: { name: string; description: string }[];
   errorMessage: string | null;
+  loading: boolean;
 }
 
-const ResultList: React.FC<Props> = ({ results }) => {
+const ResultList = ({ results, errorMessage, loading }: Props) => { 
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div className="result-container">
-      {results.length > 0 ? (
+      {errorMessage ? (
+        <p>{errorMessage}</p>
+      ) : results.length > 0 ? (
         <ul className="result-list">
           {results.map((result) => (
             <li key={result.name} className="result-item">

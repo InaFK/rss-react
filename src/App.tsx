@@ -141,14 +141,12 @@ const SearchResults = () => {
         />
       </section>
       <section>
-        {loading && <p>Loading...</p>}
-        {errorMessage && <p>{errorMessage}</p>}
         {!loading && !errorMessage && singleResult && (
-          <ResultList results={[singleResult]} errorMessage={null} />
+          <ResultList results={[singleResult]} errorMessage={null} loading={loading} />
         )}
         {!loading && !errorMessage && (singleResult || results.length > 0) && (
           <div>
-            <ResultList results={singleResult ? [singleResult] : results} errorMessage={null} />
+            <ResultList results={singleResult ? [singleResult] : results} errorMessage={null} loading={loading} />
             {totalPages > 1 && results.length > 1 && (
               <Pagination
                 currentPage={currentPage}
