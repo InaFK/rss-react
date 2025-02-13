@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Search: React.FC<Props> = ({ onSearch, onError }) => {
-  const [searchTerm, setSearchTerm] = useSearchQuery('');
+  const [searchTerm, setSearchTerm] = useSearchQuery();
   
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
