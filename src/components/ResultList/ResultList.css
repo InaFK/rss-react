@@ -1,3 +1,13 @@
 .result-container {
   max-width: 1400px;
 }
+.result-list {
+  column-count: 2;
+}
+
+.result-item {
+  border: 1px solid #646cff;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  padding: 10px;
+}

@@ -5,6 +5,7 @@ import Search from './components/Search/Search';
 import ResultList from './components/ResultList/ResultList';
 import useSearchQuery from './hooks/useSearchQuery';
 import Pagination from './components/Pagination/Pagination';
+import NotFound from './pages/NotFound';
 import './App.css';
 
 const API_URL = 'https://pokeapi.co/api/v2/pokemon/';
@@ -15,6 +16,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<SearchResults />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
