@@ -92,7 +92,6 @@ const SearchResults = () => {
 
     setLoading(true);
     setResults([]);
-    setSingleResult(null);
     setErrorMessage(null);
 
     try {
