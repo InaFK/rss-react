@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from
 import pokeApiLogo from './assets/pokeapi_256.3fa72200.png';
 import Search from './components/Search/Search';
 import ResultList from './components/ResultList/ResultList';
-import useSearchQuery from './hooks/useSearchQuery';
 import Pagination from './components/Pagination/Pagination';
+import DetailsPanel from './components/DetailsPanel/DetailsPanel';
+import useSearchQuery from './hooks/useSearchQuery';
 import NotFound from './pages/NotFound';
 import './App.css';
 
@@ -36,7 +37,7 @@ const SearchResults = () => {
   const queryParams = new URLSearchParams(location.search);
   const pageParam = queryParams.get('page') || '1';
   const [results, setResults] = useState<{ name: string; description: string }[]>([]);
-  const [singleResult, setSingleResult] = useState<{ name: string; description: string } | null>(null);
+  const [selectedPokemon, setSelectedPokemon] = useState<{ name: string; description: string } | null>(null);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useSearchQuery();
@@ -54,7 +55,6 @@ const SearchResults = () => {
 
   const fetchInitialResults = async (page: string) => {
     setLoading(true);
-    setSingleResult(null);
     setErrorMessage(null);
 
     try {
@@ -126,6 +126,14 @@ const SearchResults = () => {
     }
   };
 
+  const handleSelect = (pokemon: { name: string; description: string }) => {
+    setSelectedPokemon(pokemon);
+  };
+
+  const handleClosePanel = () => {
+    setSelectedPokemon(null);
+  };
+
   return (
     <main>
       <header>
@@ -143,22 +151,15 @@ const SearchResults = () => {
         />
       </section>
       <section>
-        {!loading && !errorMessage && singleResult && (
-          <ResultList results={[singleResult]} errorMessage={null} loading={loading} />
-        )}
-        {!loading && !errorMessage && (singleResult || results.length > 0) && (
-          <div>
-            <ResultList results={singleResult ? [singleResult] : results} errorMessage={null} loading={loading} />
-            {totalPages > 1 && results.length > 1 && (
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-              />
-            )}
-          </div>
-        )}
+        <div>
+          {errorMessage && <p className="error">{errorMessage}</p>}
+            <ResultList results={results} errorMessage={null} loading={loading} onSelect={handleSelect} />
+            {totalPages > 1 && (
+              <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+          )}
+        </div>
       </section>
+      <DetailsPanel pokemon={selectedPokemon} onClose={handleClosePanel} />
     </main>
   );
 };

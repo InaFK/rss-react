@@ -4,9 +4,10 @@ interface Props {
   results: { name: string; description: string }[];
   errorMessage: string | null;
   loading: boolean;
+  onSelect: (pokemon: { name: string; description: string }) => void;
 }
 
-const ResultList = ({ results, errorMessage, loading }: Props) => { 
+const ResultList = ({ results, errorMessage, loading, onSelect }: Props) => { 
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -18,7 +19,11 @@ const ResultList = ({ results, errorMessage, loading }: Props) => {
       ) : results.length > 0 ? (
         <ul className="result-list">
           {results.map((result) => (
-            <li key={result.name} className="result-item">
+            <li
+              key={result.name}
+              className="result-item"
+              onClick={() => onSelect(result)}
+            >
               <h2>{result.name}</h2>
               <p>{result.description}</p>
             </li>
