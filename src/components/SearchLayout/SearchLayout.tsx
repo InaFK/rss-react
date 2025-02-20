@@ -10,13 +10,18 @@ import './SearchLayout.css';
 const API_URL = 'https://pokeapi.co/api/v2/pokemon/';
 const itemsPerPage = 10;
 
+interface PokemonResult {
+  name: string;
+  description: string;
+}
+
 const SearchLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const pageParam = queryParams.get('page') || '1';
   const currentPage = parseInt(pageParam, 10);
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState<PokemonResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useSearchQuery();
