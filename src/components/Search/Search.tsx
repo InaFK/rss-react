@@ -24,14 +24,19 @@ const Search: React.FC<Props> = ({ onSearch, onError }) => {
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') handleSearch();
+  };
+
   return (
     <div className="search-container">
       <input
         type="search"
         name="search"
-        placeholder="Search"
+        placeholder="Search Pokémon"
         value={searchTerm}
         onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
       />
       <button onClick={handleSearch}>Search</button>
     </div>
