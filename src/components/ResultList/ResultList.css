@@ -1,0 +1,15 @@
+.result-list {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+.result-list:has(.result-item:nth-child(10)) {
+  grid-template-columns: 1fr 1fr;
+}
+
+.result-item {
+  padding: 1rem;
+  border: 1px solid #646cff;
+  border-radius: 10px;
+}
