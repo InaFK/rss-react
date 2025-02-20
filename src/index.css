@@ -48,8 +48,9 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
-  color: #535bf2;
+  color: #2c4466;
 }
 
 h1, h2 {
@@ -88,17 +89,15 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+header {
+  padding: 20px 0;
+}
+
 main {
-  min-height: 100vh;
   padding: 20px 0;
   width: 100%;
 }
 
-section {
-  display: flex;
-  justify-content: center;
-  padding: 20px 0 0;
-}
  ul {
   padding: 0;
  }
@@ -107,17 +106,41 @@ section {
   list-style: none;
  }
 
-.error-boundary-fallback {
-  color: red;
-  font-size: 1.5rem;
+.header {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+ .container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0 0;
+}
+
+.error {
   text-align: center;
-  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  margin: 20px;
+}
+
+.error-text {
+  font-size: 18px;
+  margin: 10px 0;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #fff;
+    background-color: #fbcb1c;
   }
 
   a:hover {

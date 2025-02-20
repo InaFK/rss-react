@@ -1,15 +1,14 @@
 .details-panel {
-  position: fixed;
-  right: 20px;
-  top: 120px;
   width: 320px;
-  background-color: #f0b322;
+  background-color: #cfa71c;
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
-  border-radius: 20px;
-  padding: 20px;
-  transform: translateX(0);
-  transition: transform 0.3s ease-in-out;
-  z-index: 1000;
+  border-radius: 5px;
+  overflow-y: auto;
+  padding: 1rem;
+  position: relative;
+}
+.details-panel:empty {
+  display: none;
 }
 
 .close-btn {
@@ -20,6 +19,10 @@
   position: absolute;
   top: 10px;
   right: 15px;
+}
+
+.close-btn:focus {
+  outline: 0 auto transparent;
 }
 
 .details-panel h2 {

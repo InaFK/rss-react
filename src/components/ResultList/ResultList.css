@@ -1,13 +1,15 @@
-.result-container {
-  max-width: 1400px;
-}
 .result-list {
-  column-count: 2;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+.result-list:has(.result-item:nth-child(10)) {
+  grid-template-columns: 1fr 1fr;
 }
 
 .result-item {
+  padding: 1rem;
   border: 1px solid #646cff;
-  border-radius: 20px;
-  margin-bottom: 10px;
-  padding: 10px;
+  border-radius: 10px;
 }
