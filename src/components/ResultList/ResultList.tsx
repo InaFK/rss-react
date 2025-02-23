@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './ResultList.css';
 
 interface Props {
@@ -7,7 +8,13 @@ interface Props {
   onSelect: (pokemon: { name: string; description: string }) => void;
 }
 
-const ResultList = ({ results, errorMessage, loading, onSelect }: Props) => { 
+const ResultList = ({ results, errorMessage, loading, onSelect }: Props) => {
+  const [selectedName, setSelectedName] = useState<string | null>(null);
+
+  const handleSelect = (pokemon: { name: string; description: string }) => {
+    setSelectedName(pokemon.name);
+    onSelect(pokemon); 
+  }
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -21,8 +28,8 @@ const ResultList = ({ results, errorMessage, loading, onSelect }: Props) => {
           {results.map((result) => (
             <li
               key={result.name}
-              className="result-item"
-              onClick={() => onSelect(result)}
+              className={`result-item ${result.name === selectedName ? 'selected' : ''}`}
+              onClick={() => handleSelect(result)}
             >
               <h2>{result.name}</h2>
               <p>{result.description}</p>

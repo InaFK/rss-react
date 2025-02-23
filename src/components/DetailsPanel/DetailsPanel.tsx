@@ -1,48 +1,33 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useGetPokemonByNameQuery, useGetPokemonSpeciesQuery } from '../../features/pokemonApi';
 import './DetailsPanel.css';
-
-const API_URL = 'https://pokeapi.co/api/v2/pokemon/';
-
-interface Pokemon {
-  name: string;
-  description: string;
-}
 
 const DetailsPanel = () => {
   const { pokemonName } = useParams<{ pokemonName: string }>();
   const navigate = useNavigate();
-  const [pokemon, setPokemon] = useState<Pokemon | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  
+  const { data: pokemon, isLoading: loadingPokemon, error: pokemonError } = useGetPokemonByNameQuery(pokemonName!, { skip: !pokemonName });
+  const { data: species, isLoading: loadingSpecies, error: speciesError } = useGetPokemonSpeciesQuery(pokemonName!, { skip: !pokemonName });
 
-  useEffect(() => {
-    if (!pokemonName) return;
+  const handleClose = () => navigate('/search');
 
-    setLoading(true);
-    fetch(`${API_URL}${pokemonName}`)
-      .then((res) => {
-        if (!res.ok) throw new Error('Not found');
-        return res.json();
-      })
-      .then((data) => setPokemon({ name: data.name, description: data.species.url }))
-      .catch(() => setError('Pokémon not found.'))
-      .finally(() => setLoading(false));
-  }, [pokemonName]);
+  if (!pokemonName) return <p>Select a Pokémon to view details.</p>;
+  if (loadingPokemon || loadingSpecies) return <p>Loading details...</p>;
+  if (pokemonError || speciesError) return <p className="error">Pokémon not found.</p>;
 
-  const handleClose = () => {
-    navigate('/search');
-  };
-
-  if (loading) return <p>Loading details...</p>;
-  if (error) return <p className="error">{error}</p>;
-  if (!pokemon) return <p>Select a Pokémon to view details.</p>;
+  const descriptionEntry = species?.flavor_text_entries?.find((entry) => entry.language.name === 'en');
 
   return (
     <div className="details-panel-content">
       <button className="close-btn" onClick={handleClose} aria-label="Close Details">×</button>
       <h2>{pokemon.name}</h2>
-      <p>Description URL: <a href={pokemon.description} target="_blank">{pokemon.description}</a></p>
+      {pokemon?.sprites?.front_default && (
+        <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+      )}
+      <p><strong>Description:</strong> {descriptionEntry?.flavor_text ?? 'No description available.'}</p>
+      <p><strong>Height:</strong> {pokemon?.height}</p>
+      <p><strong>Weight:</strong> {pokemon?.weight}</p>
+      <p><strong>Abilities:</strong> {pokemon?.abilities?.length ? pokemon.abilities.map((a) => a.ability.name).join(', ') : 'None'}</p>
     </div>
   );
 };
