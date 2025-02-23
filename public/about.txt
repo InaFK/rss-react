@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Give You Glory
+- Font Author: http://scripts.sil.org/OFL
+- Font Source: https://fonts.gstatic.com/s/giveyouglory/v15/8QIQdiHOgt3vv4LR7ahjw9-XYc1zB4ZD6rwa.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
