@@ -10,7 +10,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<SearchLayout />}>
-          <Route path=":pokemonName" element={<DetailsPanel />} />
+          <Route path=":itemName" element={<DetailsPanel />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

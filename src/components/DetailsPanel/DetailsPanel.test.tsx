@@ -7,7 +7,7 @@ const renderWithRoute = (initialRoute = '/search') => {
     <MemoryRouter initialEntries={[initialRoute]}>
       <Routes>
         <Route path="/search" element={<DetailsPanel />} />
-        <Route path="/search/:pokemonName" element={<DetailsPanel />} />
+        <Route path="/search/:itemName" element={<DetailsPanel />} />
       </Routes>
     </MemoryRouter>
   );

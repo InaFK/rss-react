@@ -1,14 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { pokemonApi } from '../features/pokemonApi';
-import selectionReducer from '../features/selectionSlice';
+import { api } from '../features/api';
+import selectedItemsReducer from '../features/selectedItemsSlice';
+import currentPageReducer from '../features/currentPageSlice';
 
 export const store = configureStore({
   reducer: {
-    [pokemonApi.reducerPath]: pokemonApi.reducer,
-    selection: selectionReducer,
+    [api.reducerPath]: api.reducer,
+    selection: selectedItemsReducer,
+    currentPage: currentPageReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(pokemonApi.middleware),
+    getDefaultMiddleware().concat(api.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

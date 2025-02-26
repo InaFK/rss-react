@@ -17,7 +17,7 @@ const Search: React.FC<Props> = ({ onSearch, onError }) => {
   const handleSearch = () => {
     const trimmedTerm = searchTerm.trim();
 
-    if (trimmedTerm.length >= 5 || trimmedTerm.length === 0) {
+    if (trimmedTerm.length >= 1 || trimmedTerm.length === 0) {
       onSearch(trimmedTerm);
     } else {
       onError('API search result can only be fetched by entering a whole Pokémon name.');

@@ -35,4 +35,4 @@ const selectedItemsSlice = createSlice({
 
 export const { selectItem, unselectItem, unselectAll } = selectedItemsSlice.actions;
 export default selectedItemsSlice.reducer;
-export type { SelectedItemsState };
+export type { SelectedItem, SelectedItemsState };

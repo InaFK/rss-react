@@ -5,15 +5,15 @@ interface Props {
   results: { name: string; description: string }[];
   errorMessage: string | null;
   loading: boolean;
-  onSelect: (pokemon: { name: string; description: string }) => void;
+  onSelect: (item: { name: string; description: string }) => void;
 }
 
 const ResultList = ({ results, errorMessage, loading, onSelect }: Props) => {
   const [selectedName, setSelectedName] = useState<string | null>(null);
 
-  const handleSelect = (pokemon: { name: string; description: string }) => {
-    setSelectedName(pokemon.name);
-    onSelect(pokemon); 
+  const handleSelect = (item: { name: string; description: string }) => {
+    setSelectedName(item.name);
+    onSelect(item); 
   }
   if (loading) {
     return <p>Loading...</p>;
