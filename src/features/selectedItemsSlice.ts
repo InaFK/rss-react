@@ -30,9 +30,17 @@ const selectedItemsSlice = createSlice({
     unselectAll: (state) => {
       state.items = [];
     },
+    toggleCheckboxSelection: (state, action: PayloadAction<SelectedItem>) => {
+      const index = state.items.findIndex(item => item.id === action.payload.id);
+      if (index !== -1) {
+        state.items.splice(index, 1);
+      } else {
+        state.items.push(action.payload);
+      }
+    },
   },
 });
 
-export const { selectItem, unselectItem, unselectAll } = selectedItemsSlice.actions;
+export const { selectItem, unselectItem, unselectAll, toggleCheckboxSelection } = selectedItemsSlice.actions;
 export default selectedItemsSlice.reducer;
 export type { SelectedItem, SelectedItemsState };

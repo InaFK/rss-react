@@ -10,6 +10,7 @@ import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
 import ResultList from '../ResultList/ResultList';
 import Pagination from '../Pagination/Pagination';
 import useSearchQuery from '../../hooks/useSearchQuery';
+import SelectedItemsFlyout from '../SelectedItemsFlyout/SelectedItemsFlyout';
 import './SearchLayout.css';
 
 const REST_API_URL = "https://pokeapi.co/";
@@ -120,6 +121,7 @@ const SearchLayout = () => {
             </aside>
           </div>
         </div>
+        <SelectedItemsFlyout />
       </main>
     </>
   );

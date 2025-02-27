@@ -5,8 +5,8 @@ import currentPageReducer from '../features/currentPageSlice';
 
 export const store = configureStore({
   reducer: {
-    [api.reducerPath]: api.reducer,
-    selection: selectedItemsReducer,
+    api: api.reducer,
+    selectedItems: selectedItemsReducer,
     currentPage: currentPageReducer,
   },
   middleware: (getDefaultMiddleware) =>

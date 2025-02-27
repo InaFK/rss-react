@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { toggleCheckboxSelection } from '../../features/selectedItemsSlice';
 import './ResultList.css';
 
 interface Props {
@@ -9,12 +11,19 @@ interface Props {
 }
 
 const ResultList = ({ results, errorMessage, loading, onSelect }: Props) => {
+  const dispatch = useAppDispatch();
+  const selectedItems = useAppSelector(state => state.selectedItems.items);
   const [selectedName, setSelectedName] = useState<string | null>(null);
 
   const handleSelect = (item: { name: string; description: string }) => {
     setSelectedName(item.name);
-    onSelect(item); 
-  }
+    onSelect(item);
+  };
+
+  const handleCheckboxChange = (item: { name: string; description: string }) => {
+    dispatch(toggleCheckboxSelection({ id: item.name, name: item.name, description: item.description, detailsUrl: `/search/${item.name}` }));
+  };
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -31,6 +40,12 @@ const ResultList = ({ results, errorMessage, loading, onSelect }: Props) => {
               className={`result-item ${result.name === selectedName ? 'selected' : ''}`}
               onClick={() => handleSelect(result)}
             >
+              <input
+                type="checkbox"
+                checked={selectedItems.some((item) => item.id === result.name)}
+                onChange={() => handleCheckboxChange(result)}
+                onClick={(event) => event.stopPropagation()}
+              />
               <h2>{result.name}</h2>
               <p>{result.description}</p>
             </li>
