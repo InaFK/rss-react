@@ -5,12 +5,17 @@ import './index.css';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import { ThemeProvider } from './context/ThemeContext';
+import ThemeSetter from './components/ThemeSetter/ThemeSetter';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Provider store={store}>
       <ErrorBoundary>
-        <App />
+        <ThemeProvider>
+        <ThemeSetter />
+          <App />
+        </ThemeProvider>
       </ErrorBoundary>
     </Provider>
   </React.StrictMode>

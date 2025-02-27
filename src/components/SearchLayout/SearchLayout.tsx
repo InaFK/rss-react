@@ -6,6 +6,7 @@ import { useAppDispatch } from '../../app/hooks';
 import { setPage } from '../../features/currentPageSlice';
 import { selectItem } from '../../features/selectedItemsSlice';
 import Search from '../Search/Search';
+import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
 import ResultList from '../ResultList/ResultList';
 import Pagination from '../Pagination/Pagination';
 import useSearchQuery from '../../hooks/useSearchQuery';
@@ -90,6 +91,7 @@ const SearchLayout = () => {
           </a>
           <img src={apiLogo} alt="Poke Api" width="200" height="70" />
         </h1>
+        <ThemeSwitcher />
       </header>
       <main>
         <div className="container">
