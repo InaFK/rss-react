@@ -1,9 +1,9 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store } from '../../app/store';
-import DetailsPanel from './DetailsPanel';
+// import { useNavigate, useParams } from 'react-router-dom';
+// import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+// import { MemoryRouter, Route, Routes } from 'react-router-dom';
+// import { Provider } from 'react-redux';
+// import { store } from '../../app/store';
+// import DetailsPanel from './DetailsPanel';
 import { vi } from 'vitest';
 
 vi.mock('react-router-dom', async () => {
@@ -26,36 +26,36 @@ vi.mock('react-router-dom', async () => {
 // }));
 
 
-import { useGetItemByNameQuery, useGetItemSpeciesQuery } from '../../features/api';
+// import { useGetItemByNameQuery, useGetItemSpeciesQuery } from '../../features/api';
 
-const mockPokemonData = {
-  name: 'pikachu',
-  height: 4,
-  weight: 60,
-  abilities: [{ ability: { name: 'static' } }, { ability: { name: 'lightning-rod' } }],
-  sprites: { front_default: 'https://img.pokemondb.net/artwork/large/pikachu.jpg' },
-};
+// const mockPokemonData = {
+//   name: 'pikachu',
+//   height: 4,
+//   weight: 60,
+//   abilities: [{ ability: { name: 'static' } }, { ability: { name: 'lightning-rod' } }],
+//   sprites: { front_default: 'https://img.pokemondb.net/artwork/large/pikachu.jpg' },
+// };
 
-const mockSpeciesData = {
-  flavor_text_entries: [{ flavor_text: 'It keeps its tail raised to monitor its surroundings.', language: { name: 'en' } }],
-};
+// const mockSpeciesData = {
+//   flavor_text_entries: [{ flavor_text: 'It keeps its tail raised to monitor its surroundings.', language: { name: 'en' } }],
+// };
 
 describe.skip('DetailsPanel Component', () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
 
-  const renderWithProviders = () => {
-    return render(
-      <Provider store={store}>
-        <MemoryRouter initialEntries={['/details/pikachu?page=1']}>
-          <Routes>
-            <Route path="/details/:itemName" element={<DetailsPanel />} />
-          </Routes>
-        </MemoryRouter>
-      </Provider>
-    );
-  };
+  // const renderWithProviders = () => {
+  //   return render(
+  //     <Provider store={store}>
+  //       <MemoryRouter initialEntries={['/details/pikachu?page=1']}>
+  //         <Routes>
+  //           <Route path="/details/:itemName" element={<DetailsPanel />} />
+  //         </Routes>
+  //       </MemoryRouter>
+  //     </Provider>
+  //   );
+  // };
 
   // test.skip('renders "Select a Pokémon to view details." when no item is selected', () => {
   //   (useParams as vi.Mock).mockReturnValue({ itemName: undefined });
