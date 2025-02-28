@@ -57,59 +57,59 @@ describe.skip('DetailsPanel Component', () => {
     );
   };
 
-  test.skip('renders "Select a Pokémon to view details." when no item is selected', () => {
-    (useParams as vi.Mock).mockReturnValue({ itemName: undefined });
-    renderWithProviders();
-    expect(screen.getByText('Select a Pokémon to view details.')).toBeInTheDocument();
-  });
+  // test.skip('renders "Select a Pokémon to view details." when no item is selected', () => {
+  //   (useParams as vi.Mock).mockReturnValue({ itemName: undefined });
+  //   renderWithProviders();
+  //   expect(screen.getByText('Select a Pokémon to view details.')).toBeInTheDocument();
+  // });
 
-  test.skip('displays "Loading details..." while fetching data', () => {
-    (useGetItemByNameQuery as vi.Mock).mockReturnValue({ data: null, isLoading: true, error: null });
-    (useGetItemSpeciesQuery as vi.Mock).mockReturnValue({ data: null, isLoading: true, error: null });
+  // test.skip('displays "Loading details..." while fetching data', () => {
+  //   (useGetItemByNameQuery as vi.Mock).mockReturnValue({ data: null, isLoading: true, error: null });
+  //   (useGetItemSpeciesQuery as vi.Mock).mockReturnValue({ data: null, isLoading: true, error: null });
 
-    renderWithProviders();
+  //   renderWithProviders();
 
-    expect(screen.getByText('Loading details...')).toBeInTheDocument();
-  });
+  //   expect(screen.getByText('Loading details...')).toBeInTheDocument();
+  // });
 
-  test.skip('displays "Pokémon not found." when API returns an error', () => {
-    (useGetItemByNameQuery as vi.Mock).mockReturnValue({ data: null, isLoading: false, error: true });
-    (useGetItemSpeciesQuery as vi.Mock).mockReturnValue({ data: null, isLoading: false, error: true });
+  // test.skip('displays "Pokémon not found." when API returns an error', () => {
+  //   (useGetItemByNameQuery as vi.Mock).mockReturnValue({ data: null, isLoading: false, error: true });
+  //   (useGetItemSpeciesQuery as vi.Mock).mockReturnValue({ data: null, isLoading: false, error: true });
 
-    renderWithProviders();
+  //   renderWithProviders();
 
-    expect(screen.getByText('Pokémon not found.')).toBeInTheDocument();
-  });
+  //   expect(screen.getByText('Pokémon not found.')).toBeInTheDocument();
+  // });
 
-  test.skip('displays Pokémon details when API data is available', async () => {
-    (useGetItemByNameQuery as vi.Mock).mockReturnValue({ data: mockPokemonData, isLoading: false, error: null });
-    (useGetItemSpeciesQuery as vi.Mock).mockReturnValue({ data: mockSpeciesData, isLoading: false, error: null });
+  // test.skip('displays Pokémon details when API data is available', async () => {
+  //   (useGetItemByNameQuery as vi.Mock).mockReturnValue({ data: mockPokemonData, isLoading: false, error: null });
+  //   (useGetItemSpeciesQuery as vi.Mock).mockReturnValue({ data: mockSpeciesData, isLoading: false, error: null });
 
-    renderWithProviders();
+  //   renderWithProviders();
 
-    await waitFor(() => {
-      expect(screen.getByText('pikachu')).toBeInTheDocument();
-      expect(screen.getByText(/Height: 4/)).toBeInTheDocument();
-      expect(screen.getByText(/Weight: 60/)).toBeInTheDocument();
-      expect(screen.getByText(/Abilities: static, lightning-rod/)).toBeInTheDocument();
-      expect(screen.getByAltText('pikachu')).toHaveAttribute('src', 'https://img.pokemondb.net/artwork/large/pikachu.jpg');
-      expect(screen.getByText(/Description:/)).toHaveTextContent('It keeps its tail raised to monitor its surroundings.');
-    });
-  });
+  //   await waitFor(() => {
+  //     expect(screen.getByText('pikachu')).toBeInTheDocument();
+  //     expect(screen.getByText(/Height: 4/)).toBeInTheDocument();
+  //     expect(screen.getByText(/Weight: 60/)).toBeInTheDocument();
+  //     expect(screen.getByText(/Abilities: static, lightning-rod/)).toBeInTheDocument();
+  //     expect(screen.getByAltText('pikachu')).toHaveAttribute('src', 'https://img.pokemondb.net/artwork/large/pikachu.jpg');
+  //     expect(screen.getByText(/Description:/)).toHaveTextContent('It keeps its tail raised to monitor its surroundings.');
+  //   });
+  // });
 
-  test.skip('navigates back when close button is clicked', async () => {
-    const mockNavigate = vi.fn();
-    (useNavigate as vi.Mock).mockReturnValue(mockNavigate);
-    (useGetItemByNameQuery as vi.Mock).mockReturnValue({ data: mockPokemonData, isLoading: false, error: null });
-    (useGetItemSpeciesQuery as vi.Mock).mockReturnValue({ data: mockSpeciesData, isLoading: false, error: null });
+  // test.skip('navigates back when close button is clicked', async () => {
+  //   const mockNavigate = vi.fn();
+  //   (useNavigate as vi.Mock).mockReturnValue(mockNavigate);
+  //   (useGetItemByNameQuery as vi.Mock).mockReturnValue({ data: mockPokemonData, isLoading: false, error: null });
+  //   (useGetItemSpeciesQuery as vi.Mock).mockReturnValue({ data: mockSpeciesData, isLoading: false, error: null });
 
-    renderWithProviders();
+  //   renderWithProviders();
 
-    const closeButton = screen.getByLabelText('Close Details');
-    fireEvent.click(closeButton);
+  //   const closeButton = screen.getByLabelText('Close Details');
+  //   fireEvent.click(closeButton);
 
-    await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith('/search?page=1');
-    });
-  });
+  //   await waitFor(() => {
+  //     expect(mockNavigate).toHaveBeenCalledWith('/search?page=1');
+  //   });
+  // });
 });
