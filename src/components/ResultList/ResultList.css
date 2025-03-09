@@ -1,0 +1,32 @@
+.result-list {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+.result-list:has(.result-item:nth-child(10)) {
+  grid-template-columns: 1fr 1fr;
+}
+
+.result-item {
+  cursor: pointer;
+  padding: 1rem;
+  border: 1px solid #646cff;
+  border-radius: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.result-item:hover {
+  background-color: #cfa71c;
+}
+
+.result-item.selected {
+  background-color: #cfa71c;
+  font-weight: bold;
+  border-left: 4px solid #3361a5;
+}
+
+.result-item.selected:hover {
+  cursor: default;
+}
+

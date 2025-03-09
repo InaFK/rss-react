@@ -1,0 +1,25 @@
+.search-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+}
+
+.result-container {
+  background-color: #dcb468;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.search-layout {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 2fr 1fr;
+}
+
+.search-layout:has(.details-panel:empty) {
+  grid-template-columns: 640px;
+  gap: 0;
+}
