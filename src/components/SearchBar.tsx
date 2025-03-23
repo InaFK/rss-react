@@ -5,7 +5,10 @@ interface SearchBarProps {
   onSearchChange: (term: string) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, onSearchChange }) => {
+const SearchBar: React.FC<SearchBarProps> = ({
+  searchTerm,
+  onSearchChange,
+}) => {
   return (
     <div className="filter">
       <label htmlFor="search-input">Search by Name: </label>

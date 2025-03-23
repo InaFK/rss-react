@@ -21,7 +21,8 @@ const App: React.FC = () => {
   }, []);
 
   const filteredCountries = countries.filter((country) => {
-    const matchesRegion = selectedRegion === 'All' || country.region === selectedRegion;
+    const matchesRegion =
+      selectedRegion === 'All' || country.region === selectedRegion;
     const matchesSearch = country.name.common
       .toLowerCase()
       .includes(searchTerm.toLowerCase());

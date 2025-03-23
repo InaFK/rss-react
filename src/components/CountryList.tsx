@@ -10,7 +10,11 @@ const CountryList: React.FC<CountryListProps> = ({ countries }) => {
     <div className="country-list">
       {countries.map((country) => (
         <div key={country.cca3} className="country-card">
-          <img src={country.flags.png} alt={`Flag of ${country.name.common}`} width="50" />
+          <img
+            src={country.flags.png}
+            alt={`Flag of ${country.name.common}`}
+            width="50"
+          />
           <h2>{country.name.common}</h2>
           <p>Population: {country.population.toLocaleString()}</p>
           <p>Region: {country.region}</p>
