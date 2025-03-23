@@ -16,11 +16,15 @@ const App: React.FC = () => {
     getCountries();
   }, []);
 
-  const regions = ['All', ...new Set(countries.map((country) => country.region))].sort();
+  const regions = [
+    'All',
+    ...new Set(countries.map((country) => country.region)),
+  ].sort();
 
-  const filteredCountries = selectedRegion === 'All'
-  ? countries
-  : countries.filter((country) => country.region === selectedRegion);
+  const filteredCountries =
+    selectedRegion === 'All'
+      ? countries
+      : countries.filter((country) => country.region === selectedRegion);
 
   if (loading) return <div>Loading...</div>;
 
@@ -44,7 +48,11 @@ const App: React.FC = () => {
       <div className="country-list">
         {filteredCountries.map((country) => (
           <div key={country.cca3} className="country-card">
-            <img src={country.flags.png} alt={`Flag of ${country.name.common}`} width="50" />
+            <img
+              src={country.flags.png}
+              alt={`Flag of ${country.name.common}`}
+              width="50"
+            />
             <h2>{country.name.common}</h2>
             <p>Population: {country.population.toLocaleString()}</p>
             <p>Region: {country.region}</p>
