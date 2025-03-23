@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { fetchCountries, Country } from './services/api';
 import RegionFilter from './components/RegionFilter';
 import SearchBar from './components/SearchBar';
@@ -25,24 +25,27 @@ const App: React.FC = () => {
 
   const regions = ['All', ...new Set(countries.map((c) => c.region))].sort();
 
-  const filteredCountries = countries.filter((country) => {
-    const matchesRegion =
-      selectedRegion === 'All' || country.region === selectedRegion;
-    const matchesSearch = country.name.common
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    return matchesRegion && matchesSearch;
-  });
+  const processedCountries = useMemo(() => {
+    console.log('Recalculating processedCountries');
+    const filteredCountries = countries.filter((country) => {
+      const matchesRegion =
+        selectedRegion === 'All' || country.region === selectedRegion;
+      const matchesSearch = country.name.common
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      return matchesRegion && matchesSearch;
+    });
 
-  const sortedCountries = [...filteredCountries].sort((a, b) => {
-    if (sortBy === 'name') {
-      const comparison = a.name.common.localeCompare(b.name.common);
-      return sortDirection === 'asc' ? comparison : -comparison;
-    } else {
-      const diff = a.population - b.population;
-      return sortDirection === 'asc' ? diff : -diff;
-    }
-  });
+    return [...filteredCountries].sort((a, b) => {
+      if (sortBy === 'name') {
+        const comparison = a.name.common.localeCompare(b.name.common);
+        return sortDirection === 'asc' ? comparison : -comparison;
+      } else {
+        const diff = a.population - b.population;
+        return sortDirection === 'asc' ? diff : -diff;
+      }
+    });
+  }, [countries, selectedRegion, searchTerm, sortBy, sortDirection]);
 
   if (loading) return <div>Loading...</div>;
 
@@ -63,7 +66,7 @@ const App: React.FC = () => {
           onSortDirectionChange={setSortDirection}
         />
       </div>
-      <CountryList countries={sortedCountries} />
+      <CountryList countries={processedCountries} />
     </div>
   );
 };

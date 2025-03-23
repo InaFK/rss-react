@@ -23,6 +23,7 @@
 
 .filter select,
 .filter input {
+  background-color: cornsilk;
   padding: 5px;
   font-size: 16px;
   border-radius: 4px;
