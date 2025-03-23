@@ -14,7 +14,6 @@ const App: React.FC = () => {
   const [sortBy, setSortBy] = useState<'name' | 'population'>('name');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
-
   useEffect(() => {
     const getCountries = async () => {
       const data = await fetchCountries();
@@ -24,10 +23,7 @@ const App: React.FC = () => {
     getCountries();
   }, []);
 
-  const regions = [
-    'All',
-    ...new Set(countries.map((c) => c.region)),
-  ].sort();
+  const regions = ['All', ...new Set(countries.map((c) => c.region))].sort();
 
   const filteredCountries = countries.filter((country) => {
     const matchesRegion =
