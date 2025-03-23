@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { fetchCountries, Country } from './services/api';
 import RegionFilter from './components/RegionFilter';
 import SearchBar from './components/SearchBar';
+import SortControls from './components/SortControls';
 import CountryList from './components/CountryList';
 import './App.css';
 
@@ -10,6 +11,9 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [selectedRegion, setSelectedRegion] = useState<string>('All');
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [sortBy, setSortBy] = useState<'name' | 'population'>('name');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+
 
   useEffect(() => {
     const getCountries = async () => {
@@ -20,6 +24,11 @@ const App: React.FC = () => {
     getCountries();
   }, []);
 
+  const regions = [
+    'All',
+    ...new Set(countries.map((c) => c.region)),
+  ].sort();
+
   const filteredCountries = countries.filter((country) => {
     const matchesRegion =
       selectedRegion === 'All' || country.region === selectedRegion;
@@ -29,6 +38,16 @@ const App: React.FC = () => {
     return matchesRegion && matchesSearch;
   });
 
+  const sortedCountries = [...filteredCountries].sort((a, b) => {
+    if (sortBy === 'name') {
+      const comparison = a.name.common.localeCompare(b.name.common);
+      return sortDirection === 'asc' ? comparison : -comparison;
+    } else {
+      const diff = a.population - b.population;
+      return sortDirection === 'asc' ? diff : -diff;
+    }
+  });
+
   if (loading) return <div>Loading...</div>;
 
   return (
@@ -36,13 +55,19 @@ const App: React.FC = () => {
       <h1>Countries:</h1>
       <div className="filters">
         <RegionFilter
-          regions={['All', ...new Set(countries.map((c) => c.region))].sort()}
+          regions={regions}
           selectedRegion={selectedRegion}
           onRegionChange={setSelectedRegion}
         />
         <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+        <SortControls
+          sortBy={sortBy}
+          sortDirection={sortDirection}
+          onSortByChange={setSortBy}
+          onSortDirectionChange={setSortDirection}
+        />
       </div>
-      <CountryList countries={filteredCountries} />
+      <CountryList countries={sortedCountries} />
     </div>
   );
 };
