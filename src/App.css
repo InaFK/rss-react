@@ -50,7 +50,17 @@
   border-radius: 5px;
 }
 
+.country-card.visited {
+  background-color: #e0f7fa;
+}
+
 .country-card img {
   max-width: 100%;
   height: auto;
+}
+.country-card label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
 }

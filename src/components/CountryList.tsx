@@ -1,27 +1,28 @@
 import React from 'react';
 import { Country } from '../services/api';
+import CountryCard from './CountryCard';
 
 interface CountryListProps {
   countries: Country[];
+  visitedCountries: Set<string>;
+  onToggleVisited: (cca3: string) => void;
 }
 
-const CountryList: React.FC<CountryListProps> = ({ countries }) => {
-  return (
-    <div className="country-list">
-      {countries.map((country) => (
-        <div key={country.cca3} className="country-card">
-          <img
-            src={country.flags.png}
-            alt={`Flag of ${country.name.common}`}
-            width="50"
+const CountryList: React.FC<CountryListProps> = React.memo(
+  ({ countries, visitedCountries, onToggleVisited }) => {
+    return (
+      <div className="country-list">
+        {countries.map((country) => (
+          <CountryCard
+            key={country.cca3}
+            country={country}
+            isVisited={visitedCountries.has(country.cca3)}
+            onToggleVisited={onToggleVisited}
           />
-          <h2>{country.name.common}</h2>
-          <p>Population: {country.population.toLocaleString()}</p>
-          <p>Region: {country.region}</p>
-        </div>
-      ))}
-    </div>
-  );
-};
+        ))}
+      </div>
+    );
+  }
+);
 
 export default CountryList;
